@@ -9,15 +9,8 @@ const listingSchema=new Schema({
     },
     description:String,
     image:{
-        url:{
-              type: String,
-            default:"https://unsplash.com/photos/gray-fabric-loveseat-near-brown-wooden-table-3wylDrjxH-E",
-        set:(v)=> v === "" ? "https://unsplash.com/photos/a-close-up-of-a-jellyfish-in-the-water-1AtSPxYnwwg":v,
-    },
-     filename:{
-           type:String,
-           default:"listing_name"
-    }
+        url:String,
+        filename:String,
     },
     price:Number,
     location:String,
@@ -31,7 +24,22 @@ const listingSchema=new Schema({
     owner:{
         type:Schema.Types.ObjectId,
         ref:"User",
-    }
+    },
+    geometry:{
+            type: {
+              type: String, // Don't do `{ location: { type: String } }`
+              enum: ['Point'], // 'location.type' must be 'Point'
+              required: true
+            },
+            coordinates: {
+              type: [Number],
+              required: true
+            }
+    },
+    coordinates:{
+        type: [Number],
+        requires:true,
+    },
 });
 
 listingSchema.post("findOneAndDelete",async(listing)=>{

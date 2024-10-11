@@ -1,3 +1,8 @@
+if(process.env.NODE_ENV != "production"){
+    require('dotenv').config()
+}
+console.log(process.env.secret)
+
 const express=require('express');
 const app=express();
 const mongoose=require('mongoose');
@@ -183,6 +188,6 @@ app.use((err,req,res,next)=>{
     // res.status(statusCode).send(message);
 });
 
-app.get('/',(req,res)=>{
-    res.send('Hi I am Root');
-});
+// app.get('/',(req,res)=>{
+//     res.send('Hi I am Root');
+// });
